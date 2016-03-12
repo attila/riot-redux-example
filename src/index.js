@@ -3,7 +3,15 @@ var redux = require('redux');
 require('./tags/sample-output.tag');
 
 var reducer = function (state = {title: 'Default title'}, action) {
-  return state;
+  switch (action.type) {
+    case 'CHANGE_TITLE':
+      return Object.assign({}, state, {
+        title: action.data
+      });
+
+    default:
+      return state;
+  }
 }
 
 var reduxStore = redux.createStore(reducer);
