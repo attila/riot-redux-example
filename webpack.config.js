@@ -1,25 +1,34 @@
 var path = require('path');
+var webpack = require('webpack');
 
 module.exports = {
   entry: './src',
   output: {
-    path: __dirname,
+    path: path.resolve(__dirname + '/build'),
+    publicPath: '/build/',
     filename: 'bundle.js'
   },
+  plugins: [
+    new webpack.ProvidePlugin({
+      riot: 'riot'
+    })
+  ],
   module: {
-    loaders: [
-      {
-        test: /\.js$/,
-        exclude: /node_modules/,
-        loader: 'babel',
-        query: {
-          presets: ['es2015']
-        }
-      },
+    preLoaders: [
       {
         test: /\.tag$/,
         exclude: /node_modules/,
-        loader: 'tag'
+        loader: 'riotjs-loader',
+        query: {
+          type: 'babel'
+        }
+      }
+    ],
+    loaders: [
+      {
+        test: /\.js|\.tag$/,
+        exclude: /node_modules/,
+        loader: 'babel-loader'
       }
     ]
   }

@@ -5,9 +5,9 @@
   </form>
 
   <script>
-    var actions = require('../actions.js');
+    import actions from '../actions.js';
 
-    changeTitle() {
+    this.changeTitle = () => {
       this.opts.store.dispatch(actions.changeTitle(this.newTitle.value));
     }
   </script>

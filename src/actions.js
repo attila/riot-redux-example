@@ -1,10 +1,10 @@
-module.exports = {
-  changeTitle: changeTitle
+const actions = {
+  changeTitle: (newTitle) => {
+    return {
+      type: 'CHANGE_TITLE',
+      data: newTitle
+    };
+  }
 };
 
-function changeTitle (newTitle) {
-  return {
-    type: 'CHANGE_TITLE',
-    data: newTitle
-  };
-}
+export default actions;

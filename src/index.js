@@ -1,9 +1,9 @@
-var riot = require('riot');
-var redux = require('redux');
-require('./tags/sample-output.tag');
-require('./tags/title-form.tag');
+import riot from 'riot';
+import { createStore } from 'redux';
+import './tags/sample-output.tag';
+import './tags/title-form.tag';
 
-var reducer = function (state = {title: 'Default title'}, action) {
+const reducer = function (state = {title: 'Default title'}, action) {
   switch (action.type) {
     case 'CHANGE_TITLE':
       return Object.assign({}, state, {
@@ -15,7 +15,7 @@ var reducer = function (state = {title: 'Default title'}, action) {
   }
 };
 
-var reduxStore = redux.createStore(reducer);
+const reduxStore = createStore(reducer);
 
 document.addEventListener('DOMContentLoaded', () => {
   riot.mount('*', {store: reduxStore});
