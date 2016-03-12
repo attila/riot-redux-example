@@ -11,6 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "redux": "^3.3.1",
     "riot": "^2.3.17"
   },
   "devDependencies": {
