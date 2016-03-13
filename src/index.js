@@ -1,22 +1,35 @@
 import riot from 'riot';
-import { createStore } from 'redux';
-import './tags/sample-output.tag';
-import './tags/title-form.tag';
+import {
+  applyMiddleware,
+  compose,
+  createStore
+} from 'redux';
+import thunk from 'redux-thunk';
 
-const reducer = function (state = {title: 'Default title'}, action) {
+import './tags/todo-app.tag';
+import './tags/task-list.tag';
+import './tags/loading-indicator.tag';
+
+const reducer = function (state = {tasks: []}, action) {
   switch (action.type) {
-    case 'CHANGE_TITLE':
-      return Object.assign({}, state, {
-        title: action.data
-      });
+    case 'TASKS_LOADED':
+      return Object.assign({}, state, {tasks: action.data});
+
+    case 'TOGGLE_LOADING':
+      return Object.assign({}, state, {isLoading: action.data});
 
     default:
       return state;
   }
 };
 
-const reduxStore = createStore(reducer);
+//const reduxStore = createStore(reducer);
+const createStoreWithMiddleware = compose(
+  applyMiddleware(thunk)
+)(createStore);
+
+let reduxStore = createStoreWithMiddleware(reducer);
 
 document.addEventListener('DOMContentLoaded', () => {
-  riot.mount('*', {store: reduxStore});
+  riot.mount('todo-app', {store: reduxStore});
 });

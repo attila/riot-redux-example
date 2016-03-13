@@ -12,6 +12,7 @@
   "license": "ISC",
   "dependencies": {
     "redux": "^3.3.1",
+    "redux-thunk": "^2.0.1",
     "riot": "^2.3.17"
   },
   "devDependencies": {
