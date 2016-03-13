@@ -9,6 +9,7 @@ import thunk from 'redux-thunk';
 import './tags/todo-app.tag';
 import './tags/task-list.tag';
 import './tags/loading-indicator.tag';
+import './tags/task-form.tag';
 
 const reducer = function (state = {tasks: []}, action) {
   switch (action.type) {
@@ -17,6 +18,9 @@ const reducer = function (state = {tasks: []}, action) {
 
     case 'TOGGLE_LOADING':
       return Object.assign({}, state, {isLoading: action.data});
+
+    case 'TASK_ADDED':
+      return Object.assign({}, state, {tasks: state.tasks.concat(action.data)});
 
     default:
       return state;

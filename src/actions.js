@@ -16,7 +16,27 @@ const actions = {
 
       setTimeout(() => {
         request.send();
-      }, 2000);
+      }, 1000);
+    }
+  },
+
+  addTask: (newTask) => {
+    return (dispatch, getState) => {
+      dispatch(toggleLoading(true));
+
+      let request = new XMLHttpRequest();
+
+      request.open('POST', 'http://localhost:3000/tasks', true);
+      request.setRequestHeader('Content-Type', 'application/json');
+      request.onload = () => {
+        if (request.status === 201) {
+          let data = JSON.parse(request.responseText);
+          dispatch(taskAdded(data.id, data.name));
+        }
+        dispatch(toggleLoading(false));
+      };
+
+      request.send(JSON.stringify({name: newTask}));
     }
   }
 };
@@ -32,6 +52,16 @@ function toggleLoading (isLoading) {
   return {
     type: 'TOGGLE_LOADING',
     data: isLoading
+  }
+}
+
+function taskAdded (id, name) {
+  return {
+    type: 'TASK_ADDED',
+    data: {
+      id: id,
+      name: name
+    }
   }
 }
 
