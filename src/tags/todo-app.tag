@@ -4,7 +4,9 @@
 
   <loading-indicator loading="{this.state.isLoading}"></loading-indicator>
 
-  <task-list tasks="{this.state.tasks}"></task-list>
+  <task-list tasks="{this.state.tasks}" handlecheck="{handleTaskCompletionChange}"></task-list>
+
+  <error-message message="{this.state.errorMessage}" iserror="{this.state.isError}" hide="{hideErrorMessage}"></error-message>
 
   <script>
     import actions from '../actions.js';
@@ -22,6 +24,14 @@
 
     this.handleNewTask = (task) => {
       store.dispatch(actions.addTask(task));
+    }
+
+    this.handleTaskCompletionChange = (id, isComplete) => {
+      store.dispatch(actions.toggleComplete(id, isComplete));
+    }
+
+    this.hideErrorMessage = () => {
+      store.dispatch(actions.hideError());
     }
   </script>
 </todo-app>
