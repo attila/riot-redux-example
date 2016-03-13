@@ -1,35 +1,16 @@
+var merge = require('webpack-merge');
 var path = require('path');
-var webpack = require('webpack');
 
-module.exports = {
-  entry: './src',
-  output: {
-    path: path.resolve(__dirname + '/build'),
-    publicPath: '/build/',
-    filename: 'bundle.js'
-  },
-  plugins: [
-    new webpack.ProvidePlugin({
-      riot: 'riot'
-    })
-  ],
-  module: {
-    preLoaders: [
-      {
-        test: /\.tag$/,
-        exclude: /node_modules/,
-        loader: 'riotjs-loader',
-        query: {
-          type: 'babel'
-        }
-      }
-    ],
-    loaders: [
-      {
-        test: /\.js|\.tag$/,
-        exclude: /node_modules/,
-        loader: 'babel-loader'
-      }
-    ]
-  }
-};
+var baseConfig = require('./webpack.config.base.js');
+var devConfig = require('./webpack.config.development.js');
+var prodConfig = require('./webpack.config.production.js');
+var config = {};
+
+if (process.env.npm_lifecycle_event === 'build') {
+  config = merge(baseConfig, prodConfig);
+}
+else {
+  config = merge(baseConfig, devConfig);
+}
+
+module.exports = config;
